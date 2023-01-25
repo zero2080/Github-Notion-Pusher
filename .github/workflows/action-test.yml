@@ -3,7 +3,7 @@ name: 🤖 Action-test
 on:
   push:
     branches:
-      - deploy-check # github action trigger branches
+      - dev # github action trigger branches
 
 jobs:
   units:
