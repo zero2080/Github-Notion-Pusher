@@ -3942,29 +3942,30 @@ exports.isFullComment = isFullComment;
 /***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
 
 "use strict";
+var __webpack_unused_export__;
 
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.isFullComment = exports.isFullUser = exports.isFullPage = exports.isFullDatabase = exports.isFullBlock = exports.iteratePaginatedAPI = exports.collectPaginatedAPI = exports.isNotionClientError = exports.RequestTimeoutError = exports.UnknownHTTPResponseError = exports.APIResponseError = exports.ClientErrorCode = exports.APIErrorCode = exports.LogLevel = exports.Client = void 0;
+__webpack_unused_export__ = ({ value: true });
+__webpack_unused_export__ = __webpack_unused_export__ = __webpack_unused_export__ = __webpack_unused_export__ = __webpack_unused_export__ = __webpack_unused_export__ = __webpack_unused_export__ = __webpack_unused_export__ = __webpack_unused_export__ = __webpack_unused_export__ = __webpack_unused_export__ = __webpack_unused_export__ = __webpack_unused_export__ = exports["in"] = exports.KU = void 0;
 var Client_1 = __nccwpck_require__(3329);
-Object.defineProperty(exports, "Client", ({ enumerable: true, get: function () { return Client_1.default; } }));
+Object.defineProperty(exports, "KU", ({ enumerable: true, get: function () { return Client_1.default; } }));
 var logging_1 = __nccwpck_require__(5188);
-Object.defineProperty(exports, "LogLevel", ({ enumerable: true, get: function () { return logging_1.LogLevel; } }));
+Object.defineProperty(exports, "in", ({ enumerable: true, get: function () { return logging_1.LogLevel; } }));
 var errors_1 = __nccwpck_require__(7072);
-Object.defineProperty(exports, "APIErrorCode", ({ enumerable: true, get: function () { return errors_1.APIErrorCode; } }));
-Object.defineProperty(exports, "ClientErrorCode", ({ enumerable: true, get: function () { return errors_1.ClientErrorCode; } }));
-Object.defineProperty(exports, "APIResponseError", ({ enumerable: true, get: function () { return errors_1.APIResponseError; } }));
-Object.defineProperty(exports, "UnknownHTTPResponseError", ({ enumerable: true, get: function () { return errors_1.UnknownHTTPResponseError; } }));
-Object.defineProperty(exports, "RequestTimeoutError", ({ enumerable: true, get: function () { return errors_1.RequestTimeoutError; } }));
+__webpack_unused_export__ = ({ enumerable: true, get: function () { return errors_1.APIErrorCode; } });
+__webpack_unused_export__ = ({ enumerable: true, get: function () { return errors_1.ClientErrorCode; } });
+__webpack_unused_export__ = ({ enumerable: true, get: function () { return errors_1.APIResponseError; } });
+__webpack_unused_export__ = ({ enumerable: true, get: function () { return errors_1.UnknownHTTPResponseError; } });
+__webpack_unused_export__ = ({ enumerable: true, get: function () { return errors_1.RequestTimeoutError; } });
 // Error helpers
-Object.defineProperty(exports, "isNotionClientError", ({ enumerable: true, get: function () { return errors_1.isNotionClientError; } }));
+__webpack_unused_export__ = ({ enumerable: true, get: function () { return errors_1.isNotionClientError; } });
 var helpers_1 = __nccwpck_require__(557);
-Object.defineProperty(exports, "collectPaginatedAPI", ({ enumerable: true, get: function () { return helpers_1.collectPaginatedAPI; } }));
-Object.defineProperty(exports, "iteratePaginatedAPI", ({ enumerable: true, get: function () { return helpers_1.iteratePaginatedAPI; } }));
-Object.defineProperty(exports, "isFullBlock", ({ enumerable: true, get: function () { return helpers_1.isFullBlock; } }));
-Object.defineProperty(exports, "isFullDatabase", ({ enumerable: true, get: function () { return helpers_1.isFullDatabase; } }));
-Object.defineProperty(exports, "isFullPage", ({ enumerable: true, get: function () { return helpers_1.isFullPage; } }));
-Object.defineProperty(exports, "isFullUser", ({ enumerable: true, get: function () { return helpers_1.isFullUser; } }));
-Object.defineProperty(exports, "isFullComment", ({ enumerable: true, get: function () { return helpers_1.isFullComment; } }));
+__webpack_unused_export__ = ({ enumerable: true, get: function () { return helpers_1.collectPaginatedAPI; } });
+__webpack_unused_export__ = ({ enumerable: true, get: function () { return helpers_1.iteratePaginatedAPI; } });
+__webpack_unused_export__ = ({ enumerable: true, get: function () { return helpers_1.isFullBlock; } });
+__webpack_unused_export__ = ({ enumerable: true, get: function () { return helpers_1.isFullDatabase; } });
+__webpack_unused_export__ = ({ enumerable: true, get: function () { return helpers_1.isFullPage; } });
+__webpack_unused_export__ = ({ enumerable: true, get: function () { return helpers_1.isFullUser; } });
+__webpack_unused_export__ = ({ enumerable: true, get: function () { return helpers_1.isFullComment; } });
 //# sourceMappingURL=index.js.map
 
 /***/ }),
@@ -10622,32 +10623,6 @@ function wrappy (fn, cb) {
 
 /***/ }),
 
-/***/ 5814:
-/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
-
-const { Client, LogLevel } = __nccwpck_require__(1536);
-const core = __nccwpck_require__(8890);
-const NotionPageRequest = __nccwpck_require__(8261);
-
-const run = async function ({ NOTION_TOKEN, NOTION_DATABASE,TARGET_BRANCH,POSITION, GITHUB }) {
-
-    core.info('Starting...');
-    
-
-    const notion = new Client({
-        auth: NOTION_TOKEN,
-        logLevel: core.isDebug() ? LogLevel.DEBUG : LogLevel.WARN,
-    });
-    await GITHUB.context.payload.commits.forEach(async commit=>{
-        const pageRequest = new NotionPageRequest(NOTION_DATABASE,POSITION,TARGET_BRANCH,commit);
-        await notion.pages.create(pageRequest);
-    })
-}
-
-exports.K = run;
-
-/***/ }),
-
 /***/ 8261:
 /***/ ((module) => {
 
@@ -10969,33 +10944,63 @@ var __webpack_exports__ = {};
 // This entry need to be wrapped in an IIFE because it need to be in strict mode.
 (() => {
 "use strict";
+// ESM COMPAT FLAG
 __nccwpck_require__.r(__webpack_exports__);
-/* harmony import */ var _actions_core__WEBPACK_IMPORTED_MODULE_0__ = __nccwpck_require__(8890);
-/* harmony import */ var _actions_core__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__nccwpck_require__.n(_actions_core__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _actions_github__WEBPACK_IMPORTED_MODULE_1__ = __nccwpck_require__(111);
-/* harmony import */ var _actions_github__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__nccwpck_require__.n(_actions_github__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _src_notion__WEBPACK_IMPORTED_MODULE_2__ = __nccwpck_require__(5814);
+
+// EXTERNAL MODULE: ./node_modules/@actions/core/lib/core.js
+var core = __nccwpck_require__(8890);
+// EXTERNAL MODULE: ./node_modules/@actions/github/lib/github.js
+var github = __nccwpck_require__(111);
+var github_default = /*#__PURE__*/__nccwpck_require__.n(github);
+// EXTERNAL MODULE: ./node_modules/@notionhq/client/build/src/index.js
+var src = __nccwpck_require__(1536);
+// EXTERNAL MODULE: ./src/notionPageRequest.js
+var notionPageRequest = __nccwpck_require__(8261);
+var notionPageRequest_default = /*#__PURE__*/__nccwpck_require__.n(notionPageRequest);
+;// CONCATENATED MODULE: ./src/notion.js
+
+
+
+
+const run = async function ({ NOTION_TOKEN, NOTION_DATABASE,TARGET_BRANCH,POSITION, GITHUB }) {
+
+    (0,core.info)('Starting...');
+    
+
+    const notion = new src/* Client */.KU({
+        auth: NOTION_TOKEN,
+        logLevel: (0,core.isDebug)() ? src/* LogLevel.DEBUG */["in"].DEBUG : src/* LogLevel.WARN */["in"].WARN,
+    });
+    await GITHUB.context.payload.commits.forEach(async commit=>{
+        const pageRequest = new (notionPageRequest_default())(NOTION_DATABASE,POSITION,TARGET_BRANCH,commit);
+        await notion.pages.create(pageRequest);
+    })
+}
+
+const _run = run;
+
+;// CONCATENATED MODULE: ./index.js
 
 
 
 
 async function start(){
-    const notion_token = (0,_actions_core__WEBPACK_IMPORTED_MODULE_0__.getInput)('NOTION_TOKEN');
-    const notion_database = (0,_actions_core__WEBPACK_IMPORTED_MODULE_0__.getInput)('NOTION_DATABASE');
-    const position = (0,_actions_core__WEBPACK_IMPORTED_MODULE_0__.getInput)('POSITION');
-    const target_branch = (0,_actions_core__WEBPACK_IMPORTED_MODULE_0__.getInput)('TARGET_BRANCH');
+    const notion_token = (0,core.getInput)('NOTION_TOKEN');
+    const notion_database = (0,core.getInput)('NOTION_DATABASE');
+    const position = (0,core.getInput)('POSITION');
+    const target_branch = (0,core.getInput)('TARGET_BRANCH');
 
     try{
-        await (0,_src_notion__WEBPACK_IMPORTED_MODULE_2__/* .run */ .K)({
+        await _run({
             "NOTION_TOKEN":notion_token,
             "NOTION_DATABASE":notion_database,
             "POSITION":position,
             "TARGET_BRANCH":target_branch,
-            "GITHUB":(_actions_github__WEBPACK_IMPORTED_MODULE_1___default())
+            "GITHUB":(github_default())
         });
     }catch(e){
         console.error(e);
-        (0,_actions_core__WEBPACK_IMPORTED_MODULE_0__.error)(e);
+        (0,core.error)(e);
     }
 }
 

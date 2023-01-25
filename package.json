@@ -14,6 +14,7 @@
     "@notionhq/client": "^2.2.3",
     "@octokit/core": "^4.2.0",
     "@octokit/rest": "^19.0.7",
+    "@octokit/webhooks-definitions": "^3.67.3",
     "octokit": "^2.0.14"
   }
 }
