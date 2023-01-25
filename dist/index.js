@@ -10644,7 +10644,7 @@ const run = async function ({ NOTION_TOKEN, NOTION_DATABASE,TARGET_BRANCH,POSITI
     })
 }
 
-exports.run = run;
+exports.K = run;
 
 /***/ }),
 
@@ -10706,7 +10706,7 @@ function messageParser(message) {
         .map(msg => msg.trim())
         .filter(msg => msg.length > 0)
     let title = body.shift();
-    let foot = body[body.length-1].indexOf('](')>0?body.pop():undefined;
+    let foot = body.length>2?body[2].indexOf('](')>0?body.pop():undefined:undefined;
     return [title,body,foot];
 }
 
@@ -10727,13 +10727,15 @@ function createChildren(message, foot) {
             }
         }
     ));
-    result.push({
-        "object": "block",
-            "type": "bookmark",
-            "bookmark": {
-                "url":foot.substring(foot.indexOf(']')+1).replaceAll(/[()]/g,'')
-            }
-    })
+    if(foot!==null && foot !==undefined && foot.length >0 ){
+       result.push({
+            "object": "block",
+                "type": "bookmark",
+                "bookmark": {
+                    "url":foot.substring(foot.indexOf(']')+1).replaceAll(/[()]/g,'')
+                }
+        })
+    }
     return result;
 }
 
@@ -10918,34 +10920,81 @@ module.exports = JSON.parse('[[[0,44],"disallowed_STD3_valid"],[[45,46],"valid"]
 /******/ 	}
 /******/ 	
 /************************************************************************/
+/******/ 	/* webpack/runtime/compat get default export */
+/******/ 	(() => {
+/******/ 		// getDefaultExport function for compatibility with non-harmony modules
+/******/ 		__nccwpck_require__.n = (module) => {
+/******/ 			var getter = module && module.__esModule ?
+/******/ 				() => (module['default']) :
+/******/ 				() => (module);
+/******/ 			__nccwpck_require__.d(getter, { a: getter });
+/******/ 			return getter;
+/******/ 		};
+/******/ 	})();
+/******/ 	
+/******/ 	/* webpack/runtime/define property getters */
+/******/ 	(() => {
+/******/ 		// define getter functions for harmony exports
+/******/ 		__nccwpck_require__.d = (exports, definition) => {
+/******/ 			for(var key in definition) {
+/******/ 				if(__nccwpck_require__.o(definition, key) && !__nccwpck_require__.o(exports, key)) {
+/******/ 					Object.defineProperty(exports, key, { enumerable: true, get: definition[key] });
+/******/ 				}
+/******/ 			}
+/******/ 		};
+/******/ 	})();
+/******/ 	
+/******/ 	/* webpack/runtime/hasOwnProperty shorthand */
+/******/ 	(() => {
+/******/ 		__nccwpck_require__.o = (obj, prop) => (Object.prototype.hasOwnProperty.call(obj, prop))
+/******/ 	})();
+/******/ 	
+/******/ 	/* webpack/runtime/make namespace object */
+/******/ 	(() => {
+/******/ 		// define __esModule on exports
+/******/ 		__nccwpck_require__.r = (exports) => {
+/******/ 			if(typeof Symbol !== 'undefined' && Symbol.toStringTag) {
+/******/ 				Object.defineProperty(exports, Symbol.toStringTag, { value: 'Module' });
+/******/ 			}
+/******/ 			Object.defineProperty(exports, '__esModule', { value: true });
+/******/ 		};
+/******/ 	})();
+/******/ 	
 /******/ 	/* webpack/runtime/compat */
 /******/ 	
 /******/ 	if (typeof __nccwpck_require__ !== 'undefined') __nccwpck_require__.ab = __dirname + "/";
 /******/ 	
 /************************************************************************/
 var __webpack_exports__ = {};
-// This entry need to be wrapped in an IIFE because it need to be isolated against other modules in the chunk.
+// This entry need to be wrapped in an IIFE because it need to be in strict mode.
 (() => {
-const core = __nccwpck_require__(8890);
-const github = __nccwpck_require__(111);
-const {run}= __nccwpck_require__(5814);
+"use strict";
+__nccwpck_require__.r(__webpack_exports__);
+/* harmony import */ var _actions_core__WEBPACK_IMPORTED_MODULE_0__ = __nccwpck_require__(8890);
+/* harmony import */ var _actions_core__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__nccwpck_require__.n(_actions_core__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _actions_github__WEBPACK_IMPORTED_MODULE_1__ = __nccwpck_require__(111);
+/* harmony import */ var _actions_github__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__nccwpck_require__.n(_actions_github__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _src_notion__WEBPACK_IMPORTED_MODULE_2__ = __nccwpck_require__(5814);
+
+
+
 
 async function start(){
-    const notion_token = core.getInput('NOTION_TOKEN');
-    const notion_database = core.getInput('NOTION_DATABASE');
-    const position = core.getInput('POSITION');
-    const target_branch = core.getInput('TARGET_BRANCH');
+    const notion_token = (0,_actions_core__WEBPACK_IMPORTED_MODULE_0__.getInput)('NOTION_TOKEN');
+    const notion_database = (0,_actions_core__WEBPACK_IMPORTED_MODULE_0__.getInput)('NOTION_DATABASE');
+    const position = (0,_actions_core__WEBPACK_IMPORTED_MODULE_0__.getInput)('POSITION');
+    const target_branch = (0,_actions_core__WEBPACK_IMPORTED_MODULE_0__.getInput)('TARGET_BRANCH');
 
     try{
-        run({
+        await (0,_src_notion__WEBPACK_IMPORTED_MODULE_2__/* .run */ .K)({
             "NOTION_TOKEN":notion_token,
             "NOTION_DATABASE":notion_database,
             "POSITION":position,
             "TARGET_BRANCH":target_branch,
-            "GITHUB":github
+            "GITHUB":(_actions_github__WEBPACK_IMPORTED_MODULE_1___default())
         });
     }catch(e){
-        core.error(e);
+        (0,_actions_core__WEBPACK_IMPORTED_MODULE_0__.error)(e);
     }
 }
 
