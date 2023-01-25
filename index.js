@@ -9,7 +9,6 @@ async function start(){
     const target_branch = getInput('TARGET_BRANCH');
 
     try{
-        console.log(JSON.stringify(github));
         await run({
             "NOTION_TOKEN":notion_token,
             "NOTION_DATABASE":notion_database,
@@ -18,6 +17,7 @@ async function start(){
             "GITHUB":github
         });
     }catch(e){
+        console.error(e);
         error(e);
     }
 }

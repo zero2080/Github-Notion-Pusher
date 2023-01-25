@@ -10986,7 +10986,6 @@ async function start(){
     const target_branch = (0,_actions_core__WEBPACK_IMPORTED_MODULE_0__.getInput)('TARGET_BRANCH');
 
     try{
-        console.log(JSON.stringify((_actions_github__WEBPACK_IMPORTED_MODULE_1___default())));
         await (0,_src_notion__WEBPACK_IMPORTED_MODULE_2__/* .run */ .K)({
             "NOTION_TOKEN":notion_token,
             "NOTION_DATABASE":notion_database,
@@ -10995,6 +10994,7 @@ async function start(){
             "GITHUB":(_actions_github__WEBPACK_IMPORTED_MODULE_1___default())
         });
     }catch(e){
+        console.error(e);
         (0,_actions_core__WEBPACK_IMPORTED_MODULE_0__.error)(e);
     }
 }
