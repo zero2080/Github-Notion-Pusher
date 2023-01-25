@@ -10623,101 +10623,6 @@ function wrappy (fn, cb) {
 
 /***/ }),
 
-/***/ 8261:
-/***/ ((module) => {
-
-class NotionPageRequest {
-    constructor(databaseId, job, banch, commit) {
-        let [title, message, foot] = messageParser(commit.message);
-        this.parent = { "database_id": databaseId };
-        this.properties = {
-            "Job": {
-                "select": {
-                    "name": job
-                },
-            },
-            "Type": {
-                "select": {
-                    "name": typeParser(title)
-                }
-            },
-            "Hot-fix": title.indexOf('핫') > 0 ? {
-                "select": {
-                    "name": "O"
-                }
-            } : undefined,
-            "Title": {
-                "title": [
-                    {
-                        "text": {
-                            "content": title
-                        }
-                    }
-                ]
-            },
-            "Deploy": {
-                "select": {
-                    "name": banch
-                }
-            },
-            "DeployedAt": {
-                "date": {
-                    "start": commit.timestamp
-                }
-            }
-        };
-        this.children = createChildren(message,foot)
-    }
-}
-
-function typeParser(title) {
-    return title.substring(0, title.indexOf(']')).replaceAll(/[[핫]/g, '');
-}
-
-function messageParser(message) {
-    console.log(message);
-    let body = message
-        .split('\n')
-        .map(msg => msg.trim())
-        .filter(msg => msg.length > 0)
-    let title = body.shift();
-    let foot = body.length>2?body[2].indexOf('](')>0?body.pop():undefined:undefined;
-    return [title,body,foot];
-}
-
-function createChildren(message, foot) {
-    let result = message.map(msg => (
-        {
-            "object": "block",
-            "type": "paragraph",
-            "paragraph": {
-                "rich_text": [
-                    {
-                        "type": "text",
-                        "text": {
-                            "content": msg
-                        }
-                    }
-                ]
-            }
-        }
-    ));
-    if(foot!==null && foot !==undefined && foot.length >0 ){
-       result.push({
-            "object": "block",
-                "type": "bookmark",
-                "bookmark": {
-                    "url":foot.substring(foot.indexOf(']')+1).replaceAll(/[()]/g,'')
-                }
-        })
-    }
-    return result;
-}
-
-module.exports = NotionPageRequest;
-
-/***/ }),
-
 /***/ 4269:
 /***/ ((module) => {
 
@@ -10895,35 +10800,6 @@ module.exports = JSON.parse('[[[0,44],"disallowed_STD3_valid"],[[45,46],"valid"]
 /******/ 	}
 /******/ 	
 /************************************************************************/
-/******/ 	/* webpack/runtime/compat get default export */
-/******/ 	(() => {
-/******/ 		// getDefaultExport function for compatibility with non-harmony modules
-/******/ 		__nccwpck_require__.n = (module) => {
-/******/ 			var getter = module && module.__esModule ?
-/******/ 				() => (module['default']) :
-/******/ 				() => (module);
-/******/ 			__nccwpck_require__.d(getter, { a: getter });
-/******/ 			return getter;
-/******/ 		};
-/******/ 	})();
-/******/ 	
-/******/ 	/* webpack/runtime/define property getters */
-/******/ 	(() => {
-/******/ 		// define getter functions for harmony exports
-/******/ 		__nccwpck_require__.d = (exports, definition) => {
-/******/ 			for(var key in definition) {
-/******/ 				if(__nccwpck_require__.o(definition, key) && !__nccwpck_require__.o(exports, key)) {
-/******/ 					Object.defineProperty(exports, key, { enumerable: true, get: definition[key] });
-/******/ 				}
-/******/ 			}
-/******/ 		};
-/******/ 	})();
-/******/ 	
-/******/ 	/* webpack/runtime/hasOwnProperty shorthand */
-/******/ 	(() => {
-/******/ 		__nccwpck_require__.o = (obj, prop) => (Object.prototype.hasOwnProperty.call(obj, prop))
-/******/ 	})();
-/******/ 	
 /******/ 	/* webpack/runtime/make namespace object */
 /******/ 	(() => {
 /******/ 		// define __esModule on exports
@@ -10951,33 +10827,118 @@ __nccwpck_require__.r(__webpack_exports__);
 var core = __nccwpck_require__(8890);
 // EXTERNAL MODULE: ./node_modules/@actions/github/lib/github.js
 var github = __nccwpck_require__(111);
-var github_default = /*#__PURE__*/__nccwpck_require__.n(github);
 // EXTERNAL MODULE: ./node_modules/@notionhq/client/build/src/index.js
 var src = __nccwpck_require__(1536);
-// EXTERNAL MODULE: ./src/notionPageRequest.js
-var notionPageRequest = __nccwpck_require__(8261);
-var notionPageRequest_default = /*#__PURE__*/__nccwpck_require__.n(notionPageRequest);
+;// CONCATENATED MODULE: ./src/notionPageRequest.js
+class NotionPageRequest {
+    constructor(databaseId, job, banch, commit) {
+        let [title, message, foot] = messageParser(commit.message);
+        this.parent = { "database_id": databaseId };
+        this.properties = {
+            "Job": {
+                "select": {
+                    "name": job
+                },
+            },
+            "Type": {
+                "select": {
+                    "name": typeParser(title)
+                }
+            },
+            "Hot-fix": title.indexOf('핫') > 0 ? {
+                "select": {
+                    "name": "O"
+                }
+            } : undefined,
+            "Title": {
+                "title": [
+                    {
+                        "text": {
+                            "content": title
+                        }
+                    }
+                ]
+            },
+            "Deploy": {
+                "select": {
+                    "name": banch
+                }
+            },
+            "DeployedAt": {
+                "date": {
+                    "start": commit.timestamp
+                }
+            }
+        };
+        this.children = createChildren(message,foot)
+    }
+}
+
+function typeParser(title) {
+    return title.substring(0, title.indexOf(']')).replaceAll(/[[핫]/g, '');
+}
+
+function messageParser(message) {
+    console.log(message);
+    let body = message
+        .split('\n')
+        .map(msg => msg.trim())
+        .filter(msg => msg.length > 0)
+    let title = body.shift();
+    let foot = body.length>2?body[2].indexOf('](')>0?body.pop():undefined:undefined;
+    return [title,body,foot];
+}
+
+function createChildren(message, foot) {
+    let result = message.map(msg => (
+        {
+            "object": "block",
+            "type": "paragraph",
+            "paragraph": {
+                "rich_text": [
+                    {
+                        "type": "text",
+                        "text": {
+                            "content": msg
+                        }
+                    }
+                ]
+            }
+        }
+    ));
+    if(foot!==null && foot !==undefined && foot.length >0 ){
+       result.push({
+            "object": "block",
+                "type": "bookmark",
+                "bookmark": {
+                    "url":foot.substring(foot.indexOf(']')+1).replaceAll(/[()]/g,'')
+                }
+        })
+    }
+    return result;
+}
+
+/* harmony default export */ const notionPageRequest = (NotionPageRequest);
 ;// CONCATENATED MODULE: ./src/notion.js
 
 
 
 
-const run = async function ({ NOTION_TOKEN, NOTION_DATABASE,TARGET_BRANCH,POSITION, GITHUB }) {
+const run = async function ({ NOTION_TOKEN, NOTION_DATABASE, TARGET_BRANCH, POSITION, GITHUB }) {
 
     (0,core.info)('Starting...');
-    
+
 
     const notion = new src/* Client */.KU({
         auth: NOTION_TOKEN,
         logLevel: (0,core.isDebug)() ? src/* LogLevel.DEBUG */["in"].DEBUG : src/* LogLevel.WARN */["in"].WARN,
     });
-    await GITHUB.context.payload.commits.forEach(async commit=>{
-        const pageRequest = new (notionPageRequest_default())(NOTION_DATABASE,POSITION,TARGET_BRANCH,commit);
+    await GITHUB.context.payload.commits.forEach(async commit => {
+        const pageRequest = new notionPageRequest(NOTION_DATABASE, POSITION, TARGET_BRANCH, commit);
         await notion.pages.create(pageRequest);
     })
 }
 
-const _run = run;
 
 ;// CONCATENATED MODULE: ./index.js
 
@@ -10991,15 +10952,14 @@ async function start(){
     const target_branch = (0,core.getInput)('TARGET_BRANCH');
 
     try{
-        await _run({
+        await run({
             "NOTION_TOKEN":notion_token,
             "NOTION_DATABASE":notion_database,
             "POSITION":position,
             "TARGET_BRANCH":target_branch,
-            "GITHUB":(github_default())
+            "GITHUB":github
         });
     }catch(e){
-        console.error(e);
         (0,core.error)(e);
     }
 }

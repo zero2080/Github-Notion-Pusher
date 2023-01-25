@@ -1,5 +1,5 @@
 import { getInput, error } from '@actions/core';
-import github from '@actions/github';
+import * as github from '@actions/github';
 import { run } from './src/notion';
 
 async function start(){
@@ -17,7 +17,6 @@ async function start(){
             "GITHUB":github
         });
     }catch(e){
-        console.error(e);
         error(e);
     }
 }

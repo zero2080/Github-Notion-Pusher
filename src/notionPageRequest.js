@@ -86,4 +86,4 @@ function createChildren(message, foot) {
     return result;
 }
 
-module.exports = NotionPageRequest;
+export default NotionPageRequest;
