@@ -1,0 +1,22 @@
+name: 🤖 Action-test
+
+on:
+  push:
+    branches:
+      - deploy-check # github action trigger branches
+
+jobs:
+  units:
+    runs-on: ubuntu-latest # 해당 github actions 스크립트가 작동할 OS 환경 지정
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2 # 프로젝트 코드 checkout
+
+      - name: Run script
+        uses: zero2080/Github-Notion-Pusher@v1.0
+        with:
+          NOTION_TOKEN: ${{ secrets.NOTION_TOKEN }}
+          NOTION_DATABASE: ${{ secrets.NOTION_DATABASE }}
+          POSITION: Back-end
+          TARGET_BRANCH: Dev

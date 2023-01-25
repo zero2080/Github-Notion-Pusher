@@ -1,0 +1,19 @@
+name: 'Github Notion DB Pusher'
+description: 'Sync GitHub push to a Notion database'
+inputs:
+  NOTION_TOKEN:
+    description: 'Your Notion API Token'
+    required: true
+  NOTION_DATABASE:
+    description: 'The Notion database id'
+    required: true
+  POSITION:
+    description: 'Notion User ID'
+    required: true
+  TARGET_BRANCH:
+    description: 'Action Branch'
+    required: true
+
+runs:
+  using: 'node16'
+  main: 'dist/index.js'
