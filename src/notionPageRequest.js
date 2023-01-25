@@ -74,7 +74,7 @@ function createChildren(message, foot) {
             }
         }
     ));
-    if(foot){
+    if(foot!==null && foot !==undefined && foot.length >0 ){
        result.push({
             "object": "block",
                 "type": "bookmark",
