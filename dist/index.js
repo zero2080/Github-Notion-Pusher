@@ -10859,6 +10859,13 @@ class NotionPageRequest {
                     }
                 ]
             },
+            "Committer":[{
+              "people":{
+                "person":{
+                  "email":"dino@robotry.co.kr"
+                }
+              }
+            }],
             "Deploy": {
                 "select": {
                     "name": banch
