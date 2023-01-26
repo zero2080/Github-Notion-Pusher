@@ -15,5 +15,6 @@ jobs:
         with:
           NOTION_TOKEN: ${{ secrets.NOTION_TOKEN }}
           NOTION_DATABASE: ${{ secrets.NOTION_DATABASE }}
+          NOTION_PEOPLE_ID: ${{ secrets.NOTION_PEOPLE_ID }}
           POSITION: Back-end
           TARGET_BRANCH: Dev
