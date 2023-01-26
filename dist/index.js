@@ -10831,7 +10831,7 @@ var github = __nccwpck_require__(111);
 var src = __nccwpck_require__(1536);
 ;// CONCATENATED MODULE: ./src/notionPageRequest.js
 class NotionPageRequest {
-    constructor(databaseId, job, banch, commit) {
+    constructor(databaseId, committer_id, job, banch, commit) {
         let [title, message, foot] = messageParser(commit.message);
         this.parent = { "database_id": databaseId };
         this.properties = {
@@ -10859,13 +10859,11 @@ class NotionPageRequest {
                     }
                 ]
             },
-            "Committer":[{
-              "people":{
-                "person":{
-                  "email":"dino@robotry.co.kr"
-                }
-              }
-            }],
+            "Committer": {
+                "people": [{
+                    "id": committer_id
+                }]
+            },
             "Deploy": {
                 "select": {
                     "name": banch
@@ -10877,7 +10875,7 @@ class NotionPageRequest {
                 }
             }
         };
-        this.children = createChildren(message,foot)
+        this.children = createChildren(message, foot)
     }
 }
 
@@ -10892,8 +10890,8 @@ function messageParser(message) {
         .map(msg => msg.trim())
         .filter(msg => msg.length > 0)
     let title = body.shift();
-    let foot = body.length>2?body[2].indexOf('](')>0?body.pop():undefined:undefined;
-    return [title,body,foot];
+    let foot = body.length > 2 ? body[2].indexOf('](') > 0 ? body.pop() : undefined : undefined;
+    return [title, body, foot];
 }
 
 function createChildren(message, foot) {
@@ -10913,13 +10911,13 @@ function createChildren(message, foot) {
             }
         }
     ));
-    if(foot!==null && foot !==undefined && foot.length >0 ){
-       result.push({
+    if (foot !== null && foot !== undefined && foot.length > 0) {
+        result.push({
             "object": "block",
-                "type": "bookmark",
-                "bookmark": {
-                    "url":foot.substring(foot.indexOf(']')+1).replaceAll(/[()]/g,'')
-                }
+            "type": "bookmark",
+            "bookmark": {
+                "url": foot.substring(foot.indexOf(']') + 1).replaceAll(/[()]/g, '')
+            }
         })
     }
     return result;
@@ -10931,7 +10929,7 @@ function createChildren(message, foot) {
 
 
 
-const run = async function ({ NOTION_TOKEN, NOTION_DATABASE, TARGET_BRANCH, POSITION, GITHUB }) {
+const run = async function ({ NOTION_TOKEN, NOTION_DATABASE, NOTION_PEOPLE_ID, TARGET_BRANCH, POSITION, GITHUB }) {
 
     (0,core.info)('Starting...');
 
@@ -10941,7 +10939,7 @@ const run = async function ({ NOTION_TOKEN, NOTION_DATABASE, TARGET_BRANCH, POSI
         logLevel: (0,core.isDebug)() ? src/* LogLevel.DEBUG */["in"].DEBUG : src/* LogLevel.WARN */["in"].WARN,
     });
     await GITHUB.context.payload.commits.forEach(async commit => {
-        const pageRequest = new notionPageRequest(NOTION_DATABASE, POSITION, TARGET_BRANCH, commit);
+        const pageRequest = new notionPageRequest(NOTION_DATABASE, NOTION_PEOPLE_ID, POSITION, TARGET_BRANCH, commit);
         await notion.pages.create(pageRequest);
     })
 }
@@ -10957,6 +10955,7 @@ async function start(){
     const notion_database = (0,core.getInput)('NOTION_DATABASE');
     const position = (0,core.getInput)('POSITION');
     const target_branch = (0,core.getInput)('TARGET_BRANCH');
+    const committer_id = (0,core.getInput)('NOTION_PEOPLE_ID');
 
     try{
         await run({
@@ -10964,6 +10963,7 @@ async function start(){
             "NOTION_DATABASE":notion_database,
             "POSITION":position,
             "TARGET_BRANCH":target_branch,
+            "NOTION_PEOPLE_ID":committer_id,
             "GITHUB":github
         });
     }catch(e){
