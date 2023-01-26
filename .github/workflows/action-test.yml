@@ -11,7 +11,7 @@ jobs:
 
     steps:
       - name: Run script
-        uses: zero2080/Github-Notion-Pusher@v1.5
+        uses: zero2080/Github-Notion-Pusher@v1.6
         with:
           NOTION_TOKEN: ${{ secrets.NOTION_TOKEN }}
           NOTION_DATABASE: ${{ secrets.NOTION_DATABASE }}

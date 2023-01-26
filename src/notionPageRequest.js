@@ -1,5 +1,5 @@
 class NotionPageRequest {
-    constructor(databaseId, job, banch, commit) {
+    constructor(databaseId, committer_id, job, banch, commit) {
         let [title, message, foot] = messageParser(commit.message);
         this.parent = { "database_id": databaseId };
         this.properties = {
@@ -27,13 +27,11 @@ class NotionPageRequest {
                     }
                 ]
             },
-            "Committer":[{
-              "people":{
-                "person":{
-                  "email":"dino@robotry.co.kr"
-                }
-              }
-            }],
+            "Committer": {
+                "people": [{
+                    "id": committer_id
+                }]
+            },
             "Deploy": {
                 "select": {
                     "name": banch
@@ -45,7 +43,7 @@ class NotionPageRequest {
                 }
             }
         };
-        this.children = createChildren(message,foot)
+        this.children = createChildren(message, foot)
     }
 }
 
@@ -60,8 +58,8 @@ function messageParser(message) {
         .map(msg => msg.trim())
         .filter(msg => msg.length > 0)
     let title = body.shift();
-    let foot = body.length>2?body[2].indexOf('](')>0?body.pop():undefined:undefined;
-    return [title,body,foot];
+    let foot = body.length > 2 ? body[2].indexOf('](') > 0 ? body.pop() : undefined : undefined;
+    return [title, body, foot];
 }
 
 function createChildren(message, foot) {
@@ -81,13 +79,13 @@ function createChildren(message, foot) {
             }
         }
     ));
-    if(foot!==null && foot !==undefined && foot.length >0 ){
-       result.push({
+    if (foot !== null && foot !== undefined && foot.length > 0) {
+        result.push({
             "object": "block",
-                "type": "bookmark",
-                "bookmark": {
-                    "url":foot.substring(foot.indexOf(']')+1).replaceAll(/[()]/g,'')
-                }
+            "type": "bookmark",
+            "bookmark": {
+                "url": foot.substring(foot.indexOf(']') + 1).replaceAll(/[()]/g, '')
+            }
         })
     }
     return result;
