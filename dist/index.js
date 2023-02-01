@@ -10939,7 +10939,7 @@ const run = async function ({ NOTION_TOKEN, NOTION_DATABASE, NOTION_PEOPLE_ID, T
         logLevel: (0,core.isDebug)() ? src/* LogLevel.DEBUG */["in"].DEBUG : src/* LogLevel.WARN */["in"].WARN,
     });
     await GITHUB.context.payload.commits.forEach(async commit => {
-        if (commit.message?.trim()?.index('[') === 0) {
+        if (commit.message?.trim()?.indexOf('[') === 0) {
             const pageRequest = new notionPageRequest(NOTION_DATABASE, NOTION_PEOPLE_ID, POSITION, TARGET_BRANCH, commit);
             try {
                 await notion.pages.create(pageRequest);

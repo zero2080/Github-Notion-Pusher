@@ -12,7 +12,7 @@ const run = async function ({ NOTION_TOKEN, NOTION_DATABASE, NOTION_PEOPLE_ID, T
         logLevel: isDebug() ? LogLevel.DEBUG : LogLevel.WARN,
     });
     await GITHUB.context.payload.commits.forEach(async commit => {
-        if (commit.message?.trim()?.index('[') === 0) {
+        if (commit.message?.trim()?.indexOf('[') === 0) {
             const pageRequest = new NotionPageRequest(NOTION_DATABASE, NOTION_PEOPLE_ID, POSITION, TARGET_BRANCH, commit);
             try {
                 await notion.pages.create(pageRequest);
