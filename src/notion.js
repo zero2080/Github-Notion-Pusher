@@ -17,7 +17,9 @@ const run = async function ({ NOTION_TOKEN, NOTION_DATABASE, NOTION_PEOPLE_ID, T
             try {
                 await notion.pages.create(pageRequest);
             } catch (e) {
+                info('=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=')
                 info(JSON.stringify(commit));
+                info('=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=')
                 throw e;
             }
         } else {
