@@ -12,10 +12,15 @@ const run = async function ({ NOTION_TOKEN, NOTION_DATABASE, NOTION_PEOPLE_ID, T
         logLevel: isDebug() ? LogLevel.DEBUG : LogLevel.WARN,
     });
     await GITHUB.context.payload.commits.forEach(async commit => {
-        if(commit.message.trim().index('[')===0){
+        if (commit.message.trim().index('[') === 0) {
             const pageRequest = new NotionPageRequest(NOTION_DATABASE, NOTION_PEOPLE_ID, POSITION, TARGET_BRANCH, commit);
-            await notion.pages.create(pageRequest);
-        }else{
+            try {
+                await notion.pages.create(pageRequest);
+            } catch (e) {
+                info(JSON.stringify(commit));
+                throw e;
+            }
+        } else {
             info(`Passed Commit : ${commit.message}`);
         }
     })
