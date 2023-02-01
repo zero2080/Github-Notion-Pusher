@@ -52,7 +52,7 @@ function typeParser(title) {
 }
 
 function messageParser(message) {
-    console.log(message);
+    
     let body = message
         .split('\n')
         .map(msg => msg.trim())
