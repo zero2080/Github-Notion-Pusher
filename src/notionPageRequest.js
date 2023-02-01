@@ -27,11 +27,11 @@ class NotionPageRequest {
                     }
                 ]
             },
-            "Committer": {
+            "Committer": committer_id ? {
                 "people": [{
                     "id": committer_id
                 }]
-            },
+            }:undefined,
             "Deploy": {
                 "select": {
                     "name": banch
@@ -52,7 +52,7 @@ function typeParser(title) {
 }
 
 function messageParser(message) {
-    console.log(message);
+    
     let body = message
         .split('\n')
         .map(msg => msg.trim())

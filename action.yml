@@ -8,10 +8,13 @@ inputs:
     description: 'The Notion database id'
     required: true
   POSITION:
-    description: 'Notion User ID'
+    description: 'Position Name'
     required: true
   TARGET_BRANCH:
     description: 'Action Branch'
+    required: true
+  NOTION_PEOPLE_ID:
+    description: 'Notion User ID'
     required: true
 
 runs:

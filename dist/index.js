@@ -10859,11 +10859,11 @@ class NotionPageRequest {
                     }
                 ]
             },
-            "Committer": {
+            "Committer": committer_id ? {
                 "people": [{
                     "id": committer_id
                 }]
-            },
+            }:undefined,
             "Deploy": {
                 "select": {
                     "name": banch
@@ -10884,7 +10884,7 @@ function typeParser(title) {
 }
 
 function messageParser(message) {
-    console.log(message);
+    
     let body = message
         .split('\n')
         .map(msg => msg.trim())
@@ -10939,8 +10939,19 @@ const run = async function ({ NOTION_TOKEN, NOTION_DATABASE, NOTION_PEOPLE_ID, T
         logLevel: (0,core.isDebug)() ? src/* LogLevel.DEBUG */["in"].DEBUG : src/* LogLevel.WARN */["in"].WARN,
     });
     await GITHUB.context.payload.commits.forEach(async commit => {
-        const pageRequest = new notionPageRequest(NOTION_DATABASE, NOTION_PEOPLE_ID, POSITION, TARGET_BRANCH, commit);
-        await notion.pages.create(pageRequest);
+        if (commit.message?.trim()?.indexOf('[') === 0) {
+            const pageRequest = new notionPageRequest(NOTION_DATABASE, NOTION_PEOPLE_ID, POSITION, TARGET_BRANCH, commit);
+            try {
+                await notion.pages.create(pageRequest);
+            } catch (e) {
+                (0,core.info)('=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=')
+                ;(0,core.info)(JSON.stringify(commit));
+                (0,core.info)('=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=')
+                throw e;
+            }
+        } else {
+            (0,core.info)(`Passed Commit : ${commit.message}`);
+        }
     })
 }
 
