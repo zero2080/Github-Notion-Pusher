@@ -27,11 +27,11 @@ class NotionPageRequest {
                     }
                 ]
             },
-            "Committer": {
+            "Committer": committer_id ? {
                 "people": [{
                     "id": committer_id
                 }]
-            },
+            }:undefined,
             "Deploy": {
                 "select": {
                     "name": banch
